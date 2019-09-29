@@ -3,6 +3,6 @@
 template <typename T>
 struct Node
 {
-    T *item;
+    T item;
     Node *next;
 };

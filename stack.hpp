@@ -17,7 +17,7 @@ private:
 
         Node<T> *next = copy_stack(node->next, result);
         result->current = new Node<T>();
-        result->current->item = new T(*node->item);
+        result->current->item = node->item;
         result->current->next = next;
         return result->current;
     }
@@ -28,7 +28,7 @@ public:
         if (count == 0 || current == nullptr)
             return Underflow;
 
-        item = *current->item;
+        item = current->item;
         return Success;
     }
 
@@ -37,7 +37,7 @@ public:
         if (count == 0 || current == nullptr)
             return Underflow;
 
-        item = *current->item;
+        item = current->item;
 
         Node<T> *last = current->next;
         delete current;
@@ -56,23 +56,6 @@ public:
     }
 
     inline ErrorCode push(T item)
-    {
-        if (max_size != 0 && count >= max_size)
-            return Overflow;
-
-        T *copy = new T(item);
-
-        Node<T> *node = new Node<T>();
-        node->item = copy;
-        node->next = current;
-
-        current = node;
-
-        count++;
-        return Success;
-    }
-
-    inline ErrorCode push(T *item)
     {
         if (max_size != 0 && count >= max_size)
             return Overflow;

@@ -21,7 +21,7 @@ private:
         while (node != nullptr)
         {
             result->current->next = last = new Node<T>();
-            result->current->next->item = new T(*node->item);
+            result->current->next->item = node->item;
             result->current = result->current->next;
             node = node->next;
         }
@@ -58,7 +58,7 @@ public:
         if (count == 0 || current == nullptr)
             return Underflow;
 
-        item = *current->item;
+        item = current->item;
         return Success;
     }
 
@@ -67,7 +67,7 @@ public:
         if (count == 0 || current == nullptr)
             return Underflow;
 
-        item = *current->item;
+        item = current->item;
 
         Node<T> *last = current->next;
         delete current;
@@ -78,22 +78,6 @@ public:
     }
 
     inline ErrorCode enqueue(T item)
-    {
-        if (max_size != 0 && count >= max_size)
-            return Overflow;
-
-        T *copy = new T(item);
-
-        Node<T> *node = new Node<T>();
-        node->item = copy;
-
-        place_node(node);
-
-        count++;
-        return Success;
-    }
-
-    inline ErrorCode enqueue(T *item)
     {
         if (max_size != 0 && count >= max_size)
             return Overflow;
